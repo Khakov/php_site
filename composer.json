@@ -1,0 +1,13 @@
+{
+    "name": "khan/hello.hi",
+    "description": "Composer for me",
+    "authors": [
+        {
+            "name": "Rustam",
+            "email": "rustam@rustam.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^5.4"
+    }
+}
