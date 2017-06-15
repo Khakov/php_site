@@ -14,6 +14,23 @@ class Comment
     private $user;
     private $id;
     private $parent_id;
+    private $postId;
+
+    /**
+     * @return int
+     */
+    public function getPostId()
+    {
+        return $this->postId;
+    }
+
+    /**
+     * @param mixed $postId
+     */
+    public function setPostId($postId)
+    {
+        $this->postId = $postId;
+    }
 
     /**
      * @return mixed

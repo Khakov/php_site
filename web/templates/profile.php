@@ -16,23 +16,23 @@ foreach ($data["posts"] as $key => $post) {
         . $post->getTheme(). "</a>"."<br>";
     echo $post->getText();
     echo "</div>";
-}?>
+}
+if (isset($data["page"])){?>
+
 <div>
     <ul class="pagination">
         <?php if ($data["page"]-2>0){?>
-    <li><a href='/posts.php?page=<?php echo ($data["page"]-2) . "'>" .
+    <li><a href='/profile.php?page=<?php echo ($data["page"]-2)."&id=".($data["user"]->getId()) . "'>" .
         ($data["page"]-2) . "</a></li>";}?>
         <?php if ($data["page"]-1>0){?>
-        <li><a href='/posts.php?page=<?php echo ($data["page"]-1) . "'>" .
+        <li><a href='/profile.php?page=<?php echo ($data["page"]-1)."&id=".($data["user"]->getId()) . "'>" .
     ($data["page"]-1) . "</a></li>";}?>
     <li class="active"><a href="#"><?=$data["page"]?></a></li>
 <?php if ($data["page"]+1 <= ($data["count"] - 1)/10 + 1){?>
-    <li><a href='/posts.php?page=<?php echo ($data["page"]+1) . "'>" .
-        ($data["page"]+1) . "</a></li>";}?>
+        <li><a href='/profile.php?page=<?php echo ($data["page"]+1)."&id=".($data["user"]->getId()) . "'>" .        ($data["page"]+1) . "</a></li>";}?>
                 <?php if ($data["page"]+2 <= ($data["count"] - 1)/10 + 1){?>
-        <li><a href='/posts.php?<?php echo ($data["page"]+2) ."'>".
-    ($data["page"]+2) . "</a></li>";}?>
-
+<li><a href='/profile.php?page=<?php echo ($data["page"]+2)."&id=".($data["user"]->getId()) . "'>" .
+        ($data["page"]+2) . "</a></li>";}}?>
     </ul>
     </div>
 <?php
@@ -40,6 +40,8 @@ if (isset($data["form"])){
     ?><form method="post">
         Theme: <input type="text" name = "theme"><br>
         Text: <textarea name = "text" id="summernote"></textarea>
+        <input type="submit" value="опубликовать">
+    </form>
         <script>
             $('#summernote').summernote({
                 height: 100,

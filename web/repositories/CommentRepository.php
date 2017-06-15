@@ -41,13 +41,15 @@ class CommentRepository
         return $comments;
     }
     function addComment(Comment $comment){
-        $stmt = $this->connection->prepare("INSERT INTO comment VALUES (?,DEFAULT,?,?)");
+        $stmt = $this->connection->prepare("INSERT INTO comment VALUES (?,DEFAULT,?,?,?)");
         $commentText = $comment->getCommentText();
         $userId = $comment->getUser()->getId();
         $parentId = $comment->getParentId();
+        $postId = $comment->getPostId();
         $stmt->bindParam(1, $commentText);
         $stmt->bindParam(2, $userId);
         $stmt->bindParam(3, $parentId);
+        $stmt->bindParam(4, $postId);
         $stmt->execute();
         return $comment;
     }

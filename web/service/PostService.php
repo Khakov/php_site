@@ -38,4 +38,14 @@ class PostService
     public function getPostsCount(){
         return $this->postRepository->getPostsCount();
     }
+
+    public function getPostsCountByUser($user)
+    {
+        return $this->postRepository->getPostsCountByUser($user);
+    }
+
+    public function addPost($theme, $text, $user)
+    {
+        $this->postRepository->addPost($theme,$text,$user);
+    }
 }

@@ -52,4 +52,12 @@ class CommentService
         }
         return $childs;
     }
+    public function addComment($posId, $user, $text, $parent_id){
+        $comment = new Comment();
+        $comment->setUser($user);
+        $comment->setCommentText($text);
+        $comment->setParentId($parent_id);
+        $comment->setPostId($posId);
+        return $this->commentRepository->addComment($comment);
+    }
 }

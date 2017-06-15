@@ -127,4 +127,38 @@ class PostRepository
         }
         return $posts;
     }
+
+    public function addPost($theme, $text, $user)
+    {
+        $stmt = $this->connection->prepare("INSERT INTO post VALUES (DEFAULT,?,?,?,?)");
+        $userId = $user->getId();
+        $time = new DateTime();
+        $timeMills = $time->getTimestamp();
+        $stmt->bindParam(1, $text);
+        $stmt->bindParam(2, $theme);
+        $stmt->bindParam(3, $timeMills);
+        $stmt->bindParam(4, $userId);
+        $stmt->execute();
+        return true;
+    }
+
+    public function getPostsByUserAndPage(User $user, $page)
+    {
+        $stmt = $this->connection->prepare("SELECT p.id, p.text, p.theme, p.time
+        FROM post AS p WHERE p.user_id = ? ORDER BY p.time DESC LIMIT 10 OFFSET ?");
+        $posts = [];
+        if ($stmt->execute([$user->getId(), ($page - 1) * 10])) {
+            while ($row = $stmt->fetch()) {
+                $newPost = new Post();
+                $user = new User();
+                $newPost->setId($row[0]);
+                $newPost->setText($row[1]);
+                $newPost->setTheme($row[2]);
+                $newPost->setTime($row[3]);
+                $newPost->setUser($user);
+                $posts[] = $newPost;
+            }
+        }
+        return $posts;
+    }
 }
