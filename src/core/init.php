@@ -13,7 +13,6 @@ define('MVC_DEFAULT_ACTION', 'login'); // Default request will be /main/index
 
 // Include libraries and framework parts
 require_once CORE_PATH.'/core.func.php';
-require_once CORE_PATH.'/common.func.php';
 require_once SITE_PATH.'/models/User.php';
 
 // For authorization etc

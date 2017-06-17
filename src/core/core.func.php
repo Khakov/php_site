@@ -45,8 +45,9 @@ function process_request() {
 function load_view($view_name, $data) {
   /* ? Check $view_name ? */
   if (file_exists(SITE_PATH . '/views/' . $view_name . '.inc.php')) {
-    // Add global view variabls to this scope
-    $user = get_authorized_user();
+      require_once SITE_PATH.'/service/UserService.php';
+      $userService = new UserService();
+      $user = $userService->getAuthUser();
     // Make response
     require SITE_PATH . '/views/_blocks/header.inc.php';
     require SITE_PATH . '/views/' . $view_name . '.inc.php';
@@ -55,4 +56,12 @@ function load_view($view_name, $data) {
     // In more complex system better use exceptions.
     exit('No such template: ' . $view_name . '.inc.php');
   }
+}
+function html_replace($string){
+    return htmlspecialchars($string,ENT_HTML5, 'UTF-8');
+}
+function html_script($string){
+    $pattern = '|(<)(.*script.*)(>)|i';
+    $replacement = '&lt;${2}&gt;';
+    return preg_replace($pattern, $replacement, $string);
 }

@@ -13,7 +13,7 @@ if (isset($data["posts"])) {
         $time->setTimestamp($post->getTime());
         echo "<div class='navbar'>";
         echo "Автор: ". "<a href='/profile/". $post->getUser()->getId()."'>";
-        echo $post->getUser()->getFirstName();
+        echo $post->getUser()->getNickname();
         echo "</a>". " Дата:".$time->format('Y-m-d H:i:s')."<br>";
         echo "Тема: "."<a href='/post/" . $post->getId() . "'>"
             . $post->getTheme(). "</a>"."<br>";

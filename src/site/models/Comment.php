@@ -15,7 +15,7 @@ class Comment
     private $id;
     private $parent_id;
     private $postId;
-
+    private $time;
     /**
      * @return int
      */
@@ -114,5 +114,22 @@ public function __construct()
     {
         $this->id = $id;
     }
+
+    /**
+     * @return int
+     */
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    /**
+     * @param int $time
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+    }
+
 
 }

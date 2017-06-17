@@ -63,7 +63,6 @@ class UserRepository
 
     function getAvatarByEmail($email)
     {
-
         $avatar = '/avatar/default.jpg';
         $stmt = $this->connection->prepare("SELECT * FROM my_user WHERE email = ?");
         if ($stmt->execute(array($email))) {
@@ -76,13 +75,13 @@ class UserRepository
     function registerUser($user){
         $stmt = $this->connection->prepare("INSERT INTO my_user VALUES 
         (DEFAULT,?,?,?,?,?,?,?,?,?,?)");
-        $firstName = $user->getFirstName();
-        $lastName = $user->getLastName();
-        $nickname = $user->getNickname();
-        $email = $user->getEmail();
+        $firstName = html_replace($user->getFirstName());
+        $lastName = html_replace($user->getLastName());
+        $nickname = html_replace($user->getNickname());
+        $email = html_replace($user->getEmail());
         $avatar = $user->getAvatar();
         $password = $user->getPassword();
-        $country = $user->getCountry();
+        $country = html_replace($user->getCountry());
         $gender = $user->getGender();
         $agreement = $user->getAgreement();
         $news = $user->getNews();

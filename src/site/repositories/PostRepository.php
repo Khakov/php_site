@@ -45,7 +45,7 @@ class PostRepository
     }
     public function getPostById($id){
         $stmt = $this->connection->prepare("SELECT p.id, p.text, p.theme, p.time, 
-        my_user.id, my_user.email, my_user.first_name, my_user.last_name
+        my_user.id, my_user.email, my_user.first_name, my_user.nickname
         FROM post AS p INNER JOIN my_user ON p.user_id = my_user.id WHERE p.id=?");
         if ($stmt->execute(array($id))) {
             if ($row = $stmt->fetch()) {
@@ -58,7 +58,7 @@ class PostRepository
                 $user->setId($row[4]);
                 $user->setEmail($row[5]);
                 $user->setFirstName($row[6]);
-                $user->setLastName($row[7]);
+                $user->setNickname($row[7]);
                 $newPost->setUser($user);
                 return $newPost;
             }
@@ -105,7 +105,7 @@ class PostRepository
     public function getPostsByPage($page)
     {
         $stmt = $this->connection->prepare("SELECT p.id, p.text, p.theme, p.time, 
-        my_user.id, my_user.email, my_user.first_name, my_user.last_name
+        my_user.id, my_user.email, my_user.first_name, my_user.nickname
         FROM post AS p INNER JOIN my_user ON p.user_id = my_user.id ORDER BY 
         p.time DESC LIMIT 10 OFFSET ?");
         $posts = [];
@@ -120,7 +120,7 @@ class PostRepository
                 $user->setId($row[4]);
                 $user->setEmail($row[5]);
                 $user->setFirstName($row[6]);
-                $user->setLastName($row[7]);
+                $user->setNickname($row[7]);
                 $newPost->setUser($user);
                 $posts[] = $newPost;
             }
@@ -130,6 +130,8 @@ class PostRepository
 
     public function addPost($theme, $text, $user)
     {
+        $text = html_script($text);
+        $theme = html_replace($theme);
         $stmt = $this->connection->prepare("INSERT INTO post VALUES (DEFAULT,?,?,?,?)");
         $userId = $user->getId();
         $time = new DateTime();
