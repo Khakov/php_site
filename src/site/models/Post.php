@@ -23,7 +23,7 @@ public function __construct()
      */
     public function getTime()
     {
-        return $this->time;
+        return html_entity_decode($this->time);
     }
 
     /**
@@ -71,7 +71,7 @@ public function __construct()
      */
     public function getText()
     {
-        return $this->text;
+        return html_entity_decode($this->text);
     }
 
     /**
@@ -87,7 +87,7 @@ public function __construct()
      */
     public function getTheme()
     {
-        return $this->theme;
+        return html_entity_decode($this->theme);
     }
 
     /**

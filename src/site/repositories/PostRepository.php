@@ -130,7 +130,7 @@ class PostRepository
 
     public function addPost($theme, $text, $user)
     {
-        $text = html_script($text);
+        $text = html_replace($text);
         $theme = html_replace($theme);
         $stmt = $this->connection->prepare("INSERT INTO post VALUES (DEFAULT,?,?,?,?)");
         $userId = $user->getId();

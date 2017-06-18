@@ -81,44 +81,44 @@ class PostController
     }
     public function get_user_info($pathParams){
         $data = [];
-        if (isset($pathParams[0])) {
-            $user_id = $pathParams[0];
-        }else{
-            $user_id = $this->userService->getAuthUser()->getId();
-        }
-        if ($this->userService->getAuthUser()->getId() == $user_id) {
-            $data["form"] = true;
-        }
-        $user = $this->userService->getUserById($user_id);
-        if (isset($user)&& $user!= null) {
-            $data["user"] = $user;
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                if (isset($_POST["theme"]) && strlen($_POST["theme"]) > 0 && strlen($_POST["theme"]) < 100) {
-                    if (isset($_POST["text"]) && strlen($_POST["text"]) > 0 && strlen($_POST["text"]) < 10000) {
-                        $this->postService->addPost($_POST["theme"], $_POST["text"],
-                            $this->userService->getAuthUser());
-                    } else {
-                        $data["error"] = "Текст должен быть от 1 до 10000 символов";
-                    }
-                } else {
-                    $data["error"] = "Тема должна быть от 1 до 100 символов";
-                }
-            }
-            $count = $this->postService->getPostsCountByUser($user);
-            if (isset($pathParams[1]) && $pathParams[1] <= ($count - 1) / 10 + 1) {
-                $page = $pathParams[1];
+        if($this->userService->getAuthUser()!= null) {
+            if (isset($pathParams[0])) {
+                $user_id = $pathParams[0];
             } else {
-                $page = 1;
+                $user_id = $this->userService->getAuthUser()->getId();
             }
-            $posts = $this->postService->getPostsByUserAndPage($user, $page);
-            $data["posts"] = $posts;
-            $data["count"] = $count;
-            $data["page"] = $page;
-            return ['view' => 'post/profile',
-                'data' => $data];
+            if ($this->userService->getAuthUser()->getId() == $user_id) {
+                $data["form"] = true;
+            }
+            $user = $this->userService->getUserById($user_id);
+            if (isset($user) && $user != null) {
+                $data["user"] = $user;
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    if (isset($_POST["theme"]) && strlen($_POST["theme"]) > 0 && strlen($_POST["theme"]) < 100) {
+                        if (isset($_POST["text"]) && strlen($_POST["text"]) > 0 && strlen($_POST["text"]) < 10000) {
+                            $this->postService->addPost($_POST["theme"], $_POST["text"],
+                                $this->userService->getAuthUser());
+                        } else {
+                            $data["error"] = "Текст должен быть от 1 до 10000 символов";
+                        }
+                    } else {
+                        $data["error"] = "Тема должна быть от 1 до 100 символов";
+                    }
+                }
+                $count = $this->postService->getPostsCountByUser($user);
+                if (isset($pathParams[1]) && $pathParams[1] <= ($count - 1) / 10 + 1) {
+                    $page = $pathParams[1];
+                } else {
+                    $page = 1;
+                }
+                $posts = $this->postService->getPostsByUserAndPage($user, $page);
+                $data["posts"] = $posts;
+                $data["count"] = $count;
+                $data["page"] = $page;
+                return ['view' => 'post/profile',
+                    'data' => $data];
+            }
         }
-        else{
-            return ['view'=>"error_404", "data"=> $data];
-        }
+        return ['view' => "error_404", "data" => $data];
     }
 }

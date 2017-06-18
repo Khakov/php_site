@@ -26,7 +26,7 @@ function process_request() {
     $responseData = addRequestHandler();
     if( !isset($responseData['view']) || !isset($responseData['data']) ){
     if(!isset($responseData['redirect'])){
-      exit('Action "' . $requestHandler->getActionName() . '" doesn\'t return proper response!.'); //ToDo: make proper low-level error handling
+      exit('Action "' . $requestHandler->getActionName() . '" doesn\'t return proper response!.');
     }
     else{
       header('Location:'.$responseData['redirect']);

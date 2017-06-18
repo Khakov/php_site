@@ -27,7 +27,7 @@ class User{
      */
     public function getFirstName()
     {
-        return $this->firstName;
+        return html_entity_decode($this->firstName);
     }
 
     /**
@@ -43,7 +43,7 @@ class User{
      */
     public function getLastName()
     {
-        return $this->lastName;
+        return html_entity_decode($this->lastName);
     }
 
     /**
@@ -59,7 +59,7 @@ class User{
      */
     public function getNickname()
     {
-        return $this->nickname;
+        return html_entity_decode($this->nickname);
     }
 
     /**
@@ -91,7 +91,7 @@ class User{
      */
     public function getEmail()
     {
-        return $this->email;
+        return html_entity_decode($this->email);
     }
 
     /**
@@ -123,7 +123,7 @@ class User{
      */
     public function getCountry()
     {
-        return $this->country;
+        return html_entity_decode($this->country);
     }
 
     /**

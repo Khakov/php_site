@@ -72,7 +72,7 @@ public function __construct()
      */
     public function getCommentText()
     {
-        return $this->commentText;
+        return html_entity_decode($this->commentText);
     }
 
     /**
@@ -120,7 +120,7 @@ public function __construct()
      */
     public function getTime()
     {
-        return $this->time;
+        return html_entity_decode($this->time);
     }
 
     /**
